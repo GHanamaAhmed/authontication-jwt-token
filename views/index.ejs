@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <div>
+      <div class="mb-3">
+        <label for="" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name=""
+          id="email"
+          aria-describedby="emailHelpId"
+          placeholder="abc@mail.com"
+        />
+        <small id="emailHelpId" class="form-text text-muted">Help text</small>
+      </div>
+      <div>
+        <div class="mb-3">
+          <label for="" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name=""
+            id="password"
+            placeholder=""
+          />
+        </div>
+      </div>
+      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <script>
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const submit = document.getElementById("submit");
+
+      submit.addEventListener("click", (e) => {
+        e.preventDefault();
+        fetch("http://localhost:4000/auth/singin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            data?.res &&
+              window.open("http://localhost:4000/dashboard", "__self");
+          })
+          .then((err) => console.error(err));
+      });
+    </script>
+  </body>
+</html>
